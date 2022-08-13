@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class Produit {
+public class Produit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int idProduit;
@@ -19,7 +20,6 @@ public class Produit {
     private  int qteProduit;
     private String imgProduit ;
     @ManyToOne
-    @JsonIgnore
     Categorie categorie;
 
     public String getImgProduit() {

@@ -1,12 +1,15 @@
 package com.example.stageversion.controller;
 
 
+import com.example.stageversion.dao.CategorieDao;
 import com.example.stageversion.dao.ProduitDao;
+import com.example.stageversion.entity.Categorie;
 import com.example.stageversion.entity.Produit;
 import com.example.stageversion.service.ProduitService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +29,9 @@ public class ProduitController {
     ProduitDao produitDao ;
 
     @Autowired
+    CategorieDao categorieDao ;
+
+    @Autowired
     ServletContext context;
 
     @GetMapping({"/AllProd"})
@@ -41,6 +47,16 @@ public class ProduitController {
     {
 
         return produitService.addProduit(file,Produit/*nomcat*/);
+    }
+
+    @PostMapping("/AddprodCat/{idprod}/{idcat}")
+    @ResponseBody
+    @Transactional
+    public void affecterCatProduit (@PathVariable("idprod") Integer idprod ,@PathVariable("idcat") Integer idcat)
+    {
+     Categorie cat =  categorieDao.findById(idcat).orElse(null);
+     Produit prod = produitDao.findById(idprod).orElse(null);
+     prod.setCategorie(cat);
     }
 
     @PutMapping("/modify-Produit/{Produit-id}")
