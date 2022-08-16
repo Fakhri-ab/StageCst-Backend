@@ -59,21 +59,22 @@ public class ProduitController {
      prod.setCategorie(cat);
     }
 
-    @PutMapping("/modify-Produit/{Produit-id}")
+    @PutMapping("/modify-Produit/{id}")
     @ResponseBody
-    public Produit modifyClient(@RequestBody Produit p, @PathVariable("Produit-id") Integer ProduitId) {
-        return produitService.UpdateProduit(p);
+    public Produit modifyClient(@RequestPart("file") MultipartFile file,
+                                @RequestParam("produit") String Produit, @PathVariable("id") Integer ProduitId) throws Exception {
+        return produitService.UpdateProduit(file,Produit,ProduitId);
     }
 
-    @DeleteMapping("/remove-Produit/{Produit-id}")
+    @DeleteMapping("/remove-Produit/{id}")
     @ResponseBody
-    public void DeleteClient( @PathVariable("Produit-id") Integer ProduitId) {
+    public void DeleteClient( @PathVariable("id") Integer ProduitId) {
          produitService.deleteClient(ProduitId);
     }
 
-    @GetMapping("/retrieve-Produit/{Produit-id}")
+    @GetMapping("/retrieve-Produit/{id}")
     @ResponseBody
-    public Produit modifyClient( @PathVariable("Produit-id") Integer ProduitId) {
+    public Produit modifyClient( @PathVariable("id") Integer ProduitId) {
         return produitService.retrieveproduit(ProduitId);
     }
 

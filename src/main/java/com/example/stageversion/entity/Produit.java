@@ -19,6 +19,8 @@ public class Produit implements Serializable {
     private  float prixProduit;
     private  int qteProduit;
     private String imgProduit ;
+
+    private  String description ;
     @ManyToOne
     Categorie categorie;
 
@@ -30,12 +32,14 @@ public class Produit implements Serializable {
         this.imgProduit = imgProduit;
     }
 
-    public Produit(int idProduit, String nomProduit, float prixProduit, int qteProduit, String imgProduit, Categorie categorie) {
+    public Produit(int idProduit, String nomProduit, float prixProduit, int qteProduit,String description , String imgProduit, Categorie categorie) {
         idProduit = idProduit;
         this.nomProduit = nomProduit;
         this.prixProduit = prixProduit;
         this.qteProduit = qteProduit;
         this.imgProduit = imgProduit;
+        this.description = description ;
         this.categorie = categorie;
+
     }
 }

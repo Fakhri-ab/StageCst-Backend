@@ -5,6 +5,7 @@ import com.example.stageversion.entity.Produit;
 import com.example.stageversion.entity.User;
 import com.example.stageversion.service.CategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,25 +22,27 @@ public class CategorieController {
        return categorieService.GetAllCategories();
     }
 
+
+    // @PostAuthorize("hasAnyAuthority('Admin')")
     @PostMapping({"/AddCat"})
     public Categorie AddCategorie(@RequestBody Categorie cat) {
         return categorieService.AddCategorie(cat) ;
     }
 
-    @PutMapping("/modify-Categorie/{Categorie-id}")
+    @PutMapping("/modify-Categorie/{id}")
     @ResponseBody
-    public Categorie UpdateCategorie(@RequestBody Categorie c, @PathVariable("Categorie-id") Integer CategorieId) {
+    public Categorie UpdateCategorie(@RequestBody Categorie c, @PathVariable("id") Integer CategorieId) {
         return categorieService.UpdateCategorie(c);
     }
 
-    @DeleteMapping("/delete-Categorie/{Categorie-id}")
+    @DeleteMapping("/delete-Categorie/{id}")
     @ResponseBody
-    public void UpdateCategorie(@PathVariable("Categorie-id") Integer CategorieId) {
+    public void UpdateCategorie(@PathVariable("id") Integer CategorieId) {
          categorieService.DeleteCategorie(CategorieId);
     }
 
-    @GetMapping({"/GetCat/{Categorie-id}"})
-    public Categorie GetCat(@PathVariable("Categorie-id") Integer CategorieId){
+    @GetMapping({"/GetCat/{id}"})
+    public Categorie GetCat(@PathVariable("id") Integer CategorieId){
         return categorieService.retrieveCategorie(CategorieId);
     }
 }

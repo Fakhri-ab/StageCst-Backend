@@ -62,8 +62,33 @@ public class ProduitService {
         return  produitDao.save(prod) ;
     }
 
-    public Produit UpdateProduit(Produit p){
-        return  produitDao.save(p) ;
+    public Produit UpdateProduit(MultipartFile file , String p ,Integer id) throws JsonParseException, JsonMappingException, Exception
+    {
+         //Produit prod1 = produitDao.findById(id).orElse(null) ;
+        System.out.println("Ok .............");
+        Produit prod = new ObjectMapper().readValue( p, Produit.class);
+        prod.setIdProduit(id);
+        //  Categorie cat = new ObjectMapper().readValue( nomcat, Categorie.class);
+        boolean isExit = new File(context.getRealPath("/Images/")).exists();
+        if (!isExit)
+        {
+            new File (context.getRealPath("/Images/")).mkdir();
+            System.out.println("mkdir success.............");
+        }
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename)+"."+FilenameUtils.getExtension(filename);
+        File serverFile = new File (context.getRealPath("/Images/"+File.separator+newFileName));
+        try
+        {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile,file.getBytes());
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        // prod.setCategorie(cat);
+        prod.setImgProduit(newFileName);
+        return  produitDao.save(prod) ;
     }
 
     public void deleteClient(Integer id) { produitDao.deleteById(id);}
