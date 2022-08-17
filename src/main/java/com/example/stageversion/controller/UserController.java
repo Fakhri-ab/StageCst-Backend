@@ -1,6 +1,7 @@
 package com.example.stageversion.controller;
 
 import com.example.stageversion.entity.User;
+import com.example.stageversion.service.SendMail;
 import com.example.stageversion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private SendMail service;
 
     @PostConstruct
     public void initRoleAndUser() {
@@ -24,7 +27,9 @@ public class UserController {
 
     @PostMapping({"/registerNewUser"})
     public User registerNewUser(@RequestBody User user) {
+        service.sendSimpleEmail("abessi.fakhreddine21@gmail.com","acount created","Scitna Groupe");
         return userService.registerNewUser(user);
+
     }
 
     @GetMapping({"/forAdmin"})
